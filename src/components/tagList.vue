@@ -12,20 +12,26 @@
 					</div>
 				</div>
 			</div>
+			<Loading v-if="show"></Loading>
 		</div>
 </template>
 
 <script>
 
 	import { apiService } from "../core/apiName";
+	import Loading from "../components/loading.vue";
 
 	const tagListUrl = apiService.getTagList('apiService');
 
 	export default {
 
 		name:'TagList',
+		components:{
+			Loading
+		},
 		data(){
 			return{
+				show:true,
 				tagListData:[],
 				filterText:[],
 			}
@@ -37,15 +43,14 @@
 			async tagList(){
 				const { data } = await tagListUrl.getTagList();
 				this.tagListData = data.tags;
-				console.log(data);
 				this.tagListData.sort((a, b) => a.post_count < b.post_count ? 1 : -1);
+				this.show= false;
 			}
 		},
 		computed: {
 		    filteredFilms() {
 		      let filter = new RegExp(this.filterText, 'i')
 		      return this.tagListData.filter(el => el);
-		       console.log(filteredFilms);
 		    }
 
 		  },

@@ -1,67 +1,66 @@
 <template>
 		<div class="row">
-				<div class="col-lg-8">
-					<h1 class="mt-5">{{categoriesData.name}}</h1>
-					<hr>
-					<p class="card-text"><small class="text-muted">Posted on {{categoriesData.date | moment}}</small></p>
-					<hr>
-					
-					<hr>
-					<p class="card-text" v-html="categoriesData.description"></p>
-					
-				</div>
+			
+			<div class="col-md-8 mt-4">
+				<Card v-for="post in posts" :key="post.ID" :post="post"></Card>
+			</div>
 				<div class="col-md-4 mt-5">
 					<CategoriesList></CategoriesList>
 					<TagList></TagList>
 				</div>
+				<Loading v-if="show"></Loading>
 			</div>
 		</div>
 </template>
 
 <script>
-	import moment from 'moment';
+	
 
 	import { apiService } from "../core/apiName";
 
+	import Loading from "../components/loading.vue";
+	import Card from "../components/card.vue";
 	import CategoriesList from "../components/categoriesList.vue";
 	import TagList from "../components/tagList.vue";
 
-	const singleCategoryUrl = apiService.getSingleCategory('apiService');
+	const CategoryPostUrl = apiService.getCategoryPost('apiService');
 	
 	export default{
 		name:'Post',
 		components:{
+			Loading,
+			Card,
 			CategoriesList,
 			TagList
 		},
 		data(){
 			return{
 				date:'',
-				categoriesData:[],
+				posts:[],
+				show:true,
+				URL:''
 			}
 		},
 		
 		created(){
 			this.URL = this.$route.params.slug;
-			this.singleCategory();
+			this.categoryPost();
 		},
 		watch: {
 			     '$route.params.slug'(value) {
 			      this.URL = value;
-			      this.singleCategory();
+			      this.show = true;
+			      this.categoryPost();
+			      
 			    }
 			  },
 		methods:{
-			async singleCategory(){
-				const { data } = await singleCategoryUrl.getSingleCategory(this.URL);
-				this.categoriesData = data;
+			async categoryPost(){
+				const { data } = await CategoryPostUrl.getCategoryPost(this.URL);
+				this.posts = data.posts;
+				this.show = false;
 			},
 
-		},
-		filters:{
-			moment:function(date){
-				return moment(date).fromNow();
-			}
 		}
 	   
 	}

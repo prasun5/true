@@ -2,7 +2,7 @@
 		<div class="card my-4">
 			<div class="row">
 				<div class="col-sm-4">
-				<img :src="post.post_thumbnail.URL" class="card-img-top" alt="post_img" width="100%" height="100%" />
+				<img :src="image" class="card-img-top" alt="post_img" width="100%" height="100%" /> 
 			</div>
 			<div class="col-sm-8">
 				<div class="card-body">
@@ -25,7 +25,17 @@
 		data(){
 			return{
 				date:this.post.date,
-				postUrl: '/post/' + this.post.slug
+				postUrl: '/post/' + this.post.slug,
+				URL:'',
+				image:'',
+			}
+		},
+		created(){
+			if(this.post.post_thumbnail == null){
+				this.image = '/dist/no-image.jpg';
+			}
+			if(this.post.post_thumbnail != null){
+				this.image = this.post.post_thumbnail.URL;
 			}
 		},
 		filters:{

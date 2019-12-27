@@ -3,7 +3,7 @@
 		<div class="container" align="center">
 			<div class="nav-bar-header">
 				<a href="/" >
-					<img src="../assets/truecaller_logo.png" width="200" height="50" />
+					<img src="../assets/truecaller_logo.png" width="100" height="50" />
 				</a>
 			</div>
 		</div>
@@ -23,5 +23,9 @@
 	}
 	.container{
 		display: block!important;
+	}
+
+	.nav-bar-header img{
+		width: 200px!important;
 	}
 </style>

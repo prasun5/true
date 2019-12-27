@@ -12,20 +12,26 @@
 					</div>
 				</div>
 			</div>
+				<Loading v-if="show"></Loading>
 		</div>
 </template>
 
 <script>
 
 	import { apiService } from "../core/apiName";
+	import Loading from "../components/loading.vue";
 
 	const categoriesListUrl = apiService.getCategoriesList('apiService');
 
 	export default {
 
 		name:'CategoriesList',
+		components:{
+			Loading
+		},
 		data(){
 			return{
+				show:true,
 				categoriesListData:[]
 			}
 		},
@@ -36,7 +42,7 @@
 			async categoriesList(){
 				const { data } = await categoriesListUrl.getCategoriesList();
 				this.categoriesListData = data.categories;
-				console.log(data);
+				this.show= false;
 			}
 		},
 	}

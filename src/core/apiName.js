@@ -6,6 +6,8 @@ const apiName = {
 
 export const apiService = {
 	getPost:name=>apiName[name],
+	getCategoryPost:name=>apiName[name],
+	getTagPost:name=>apiName[name],
 	getSinglePost:name=>apiName[name],
 	getRelatedPost:name=>apiName[name],
 	getTagList:name=>apiName[name],

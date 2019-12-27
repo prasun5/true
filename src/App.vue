@@ -31,4 +31,7 @@
   body{
         padding-top: 56px;
   }
+  img{
+    width: 100%;
+  }
 </style>

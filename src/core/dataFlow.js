@@ -2,13 +2,19 @@ import ApiService from "./apiService"
 import axios from "axios";
 const qs = require('qs')
 
-const posts = '/posts';
-const singlePost = '/posts/slug:';
-const singleCategory = '/categories/slug:';
-const singleTag = '/tags/slug:';
-const relatedPost = 'related';
-const tagList = '/tags';
-const categoriesList = '/categories';
+const siteID = `sites/107403796`;
+
+const posts = siteID + '/posts';
+const singlePost = siteID + '/posts/slug:';
+const singleCategory = siteID + '/categories/slug:';
+const singleTag = siteID +'/tags/slug:';
+const relatedPost = siteID + 'related';
+const tagList = siteID +'/tags';
+const categoriesList = siteID +'/categories';
+
+const categoriesPost = siteID + '/posts?category=';
+
+const tagPost = '/read/tags/';
 
 const requestBodyData = {
 	'size':3
@@ -20,6 +26,14 @@ const config = {
 	}
 }
 export default {
+	getTagPost(slug){
+		return ApiService.get(`${tagPost}${slug}/posts`);
+	},
+
+	getCategoryPost(slug){
+		return ApiService.get(`${categoriesPost}${slug}`);
+	},
+
 	getPost(){
 		return ApiService.get(`${posts}`);
 	},
